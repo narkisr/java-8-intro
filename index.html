@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Java 8 intro</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/sky.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,27 +24,143 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+				<section>
+					<h1>Java 8</h1>
+					<h3>Moving one lambda at a time</h3>
+					<p>
+						<small>Created by <a href="http://narkisr.com">Ronen Narkis</a> / <a href="http://twitter.com/narkis">@narkirs</a></small>
+					</p>
+				</section>
+				<section>
+				  <h2> History </h2>
+				  <ul>
+				    <li>Initial beta 1995!</li>
+				    <li>Java 8 March 2014 </li>
+				    <li>Java 9 was 2016 moved to 2017 </li>
+				  </ul>
+				</section>
+				<section>
+				  <h2>Overview</h2>
+				  <ul>
+				    <li>Lambdas</li>
+				    <li>Method refrences</li>
+				    <li>Streams</li>
+				    <li>Default methods (Aka Traits)</li>
+				  </ul>
+				</section>
+				<section> 
+				  <h3>Lambda syntax</h3>
+				  <pre><code class="hljs" data-trim contenteditable>
+(arg1, arg2...) -> { body }
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+(type1 arg1, type2 arg2...) -> { body }
 
-		<script>
-			// More info https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				history: true,
+// with types 
+(int a, int b) -> {  return a + b; }
 
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
-</html>
+// ommiting braces
+() -> System.out.println("Hello World");
+
+
+// default return 
+() -> 42
+
+// or explicit
+() -> { return 3.1415 };
+				  </code></pre>
+
+				</section>
+       
+                        <section>
+                          <h3>Functional interfaces</h3>
+                          <pre><code class="java" data-trim contenteditable>
+new Thread(
+  () -> System.out.println("hello world")
+).start();
+
+Consumer&lt;Integer&gt;  c = (int x) -> { System.out.println(x) };
+
+IntConsumer b = (int a) -> a + 1;
+
+
+                          </code></pre>
+                        </section>
+
+                      <section> 
+			         <h3>Method refrences</h3>
+                          <pre><code class="java" data-trim contenteditable>
+
+String::valueOf ==  (s) -> String.valueOf(s)
+
+String ex = "hello";
+
+ex::toString ==  () -> "hello".toString();
+
+String::toString ==  (s) -> s.toString();
+
+String::new ==  () -> new String();
+
+                          </code></pre>
+
+			    </section>
+
+                      <section> 
+			         <h3>Streams</h3>
+                          <pre><code class="java" data-trim contenteditable>
+
+Stream&lt;Integer&gt; numbers = IntStream.range(1, 1000);
+
+Stream&lt;Integer&gt; sequential = numbers.map(i -> i + 1).filter(i -> i % 2 == 0); 
+
+// forkJoined
+Stream&lt;Integer&gt; parallel = seqential.parallel();
+
+List&lt;Integer&gt; list = filtered.limit(10).collect(toList());
+
+                          </code></pre>
+
+			    </section>
+
+                      <section> 
+			         <h3>Streams</h3>
+                          <pre><code class="java" data-trim contenteditable>
+
+Stream&lt;Integer&gt; numbers = IntStream.range(1, 1000);
+
+Stream&lt;Integer&gt; sequential = numbers.map(i -> i + 1).filter(i -> i % 2 == 0); 
+
+// forkJoined
+Stream&lt;Integer&gt; parallel = seqential.parallel();
+
+List&lt;Integer&gt; list = filtered.limit(10).collect(toList());
+
+                          </code></pre>
+
+			    </section>
+
+
+
+
+
+			    </div>
+			  </div>
+
+			  <script src="lib/js/head.min.js"></script>
+			  <script src="js/reveal.js"></script>
+
+			  <script>
+			    // More info https://github.com/hakimel/reveal.js#configuration
+			  Reveal.initialize({
+history: true,
+
+// More info https://github.com/hakimel/reveal.js#dependencies
+dependencies: [
+{ src: 'plugin/markdown/marked.js' },
+{ src: 'plugin/markdown/markdown.js' },
+{ src: 'plugin/notes/notes.js', async: true },
+{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+]
+});
+			  </script>
+			</body>
+		    </html>
