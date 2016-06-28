@@ -155,6 +155,29 @@ public class Foo implements Loggable, Metrics {
 	    </code></pre>
 	  </section>
 
+	  <section> 
+	    <h3>Completable Futures (Aka Promises)</h3> <pre><code class="java" data-trim contenteditable>
+ExecutorService service = Executors.newCachedThreadPool();
+
+CompletableFuture&lt;String&gt; first =
+       CompletableFuture.supplyAsync(longRunning, service);
+
+CompletableFuture&lt;String&gt; second =
+       CompletableFuture.supplyAsync(longRunning, service);
+
+CompletableFuture&lt;String&gt; combined =
+       first.thenCombineAsync(second, (f, s) -> f + " " + s, service);
+
+Function&lt;String,CompletableFuture&lt;String&gt;&gt; upper =
+       s -> CompletableFuture.completedFuture(s.toUpperCase());
+
+CompletableFuture&lt;String&gt; result = combined.thenCompose(upper);
+
+System.out.println(result.get());
+
+	    </code></pre>
+	  </section>
+
 
 
 	  <section>
