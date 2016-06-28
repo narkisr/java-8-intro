@@ -136,8 +136,39 @@ List&lt;Integer&gt; list = filtered.limit(10).collect(toList());
 
                           </code></pre>
 
-			    </section>
+				</section>
 
+				<section> 
+				  <h3>Default methods</h3>
+				  <pre><code class="java" data-trim contenteditable>
+public interface Loggable {
+
+    default Logger logger() {
+        return Logger.getLogger(this.getClass());
+    }
+}
+
+public interface Metrics {
+
+    default void report(String key, int metric) {
+        return Metric.getInstance().send(key,metric);
+    }
+}
+
+public class Foo implements Loggable, Metrics {
+    public Integer doSomething() {
+        logger().info("doing something");
+        report("call made to doSomething",1);
+        ...
+    }
+}
+				  </code></pre>
+
+				</section>
+
+                     <section>
+                       <h1> Summary </h1>
+                     </section>
 
 
 

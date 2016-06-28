@@ -1,6 +1,6 @@
 # Intro
 
-A short talk on notable new funtional features of Java 8, you can view it [online](https://narkisr.github.io/java-8-intro/#/)
+A short talk on notable new funtional features of Java 8, you can view it [online](https://narkisr.github.io/java-8-intro/#/).
 
 # License
 
